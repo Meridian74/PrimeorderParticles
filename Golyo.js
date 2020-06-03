@@ -48,10 +48,10 @@ class Golyo {
 
    setIrany() {
       if (this.SzBal > this.SzJobb) {
-         this.irany = this.irany + radians(BETA_SZOG);
+         this.irany = this.irany + radians(ALFA_SZOG + BETA_SZOG * (this.SzBal+this.SzJobb)) ;
       }
       else if (this.SzBal < this.SzJobb) {
-         this.irany = this.irany - radians(BETA_SZOG);
+         this.irany = this.irany - radians(ALFA_SZOG + BETA_SZOG * (this.SzBal+this.SzJobb));
       }
       else {
          this.irany = this.irany + radians(ALFA_SZOG);

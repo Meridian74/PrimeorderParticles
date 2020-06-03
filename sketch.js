@@ -1,8 +1,8 @@
 SCREEN_W = 1500;           // képernyő méret
 SCREEN_H = 860;
-FPS = 60;
-MENNYI = 400;              // részecskék mennyisége
-ATMERO = 10;               // részecskék átmérője
+FPS = 30;
+MENNYI = 600;              // részecskék mennyisége
+ATMERO = 15;               // részecskék átmérője
 SPEED = 0.67 * ATMERO;     // részecskék mozgási sebessége
 RMAX_SZOMSZED = 5 * ATMERO // maximum távolsága a szomszédoknak
 ALFA_SZOG = 180;           // alfa szög paraméter
