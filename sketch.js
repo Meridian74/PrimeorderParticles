@@ -43,7 +43,6 @@ function draw() {
    }
 }
 
-
 function szomszedSzamolo() {
    for (i = 0; i < MENNYI; i++) {            // megvizsgáljuk az összes részecskét sorban
       golyok[i].setSzomszed(0);              // lenullázzuk a szomszédok számait
