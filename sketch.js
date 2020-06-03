@@ -1,3 +1,4 @@
+// PARAMÉTEREK:
 SCREEN_W = 1500;           // képernyő méret
 SCREEN_H = 860;
 FPS = 30;
@@ -7,9 +8,13 @@ SPEED = 0.67 * ATMERO;     // részecskék mozgási sebessége
 RMAX_SZOMSZED = 5 * ATMERO // maximum távolsága a szomszédoknak
 ALFA_SZOG = 180;           // alfa szög paraméter
 BETA_SZOG = 17;            // béta szög paraméter
+
+// VÁLTOZÓK:
 var golyok = new Array(MENNYI);
+
 var i;
 var j;
+
 var yI;
 var yJ;
 var idX;
