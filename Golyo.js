@@ -69,6 +69,25 @@ class Golyo {
       this.dY = this.sebesseg * -sin(this.irany);  // Y irányú elmozdulás újraszámolva
    }
 
+   // kiterített TÓRUSZ VILÁG - minden szél a szemközti oldallal találkozik
+   // képernyő határával való találkozás vizsgálata
+   checkBorder() {
+      if (this.x < 0) {
+         this.x = this.x + SCREEN_W;
+      }
+      else if (this.x > SCREEN_W) {
+         this.y = this.y - SCREEN_W;
+      }
+
+      if (this.y < 0) {
+         this.y = this.y + SCREEN_H;
+      }
+      else if (this.y > SCREEN_H) {
+         this.y = this.y - SCREEN_H;
+      }
+   }
+
+   /* DOBOZ VILÁG
    // képernyő határával való találkozás vizsgálata
    checkBorder() {
       if (this.x < this.d / 2) {
@@ -88,7 +107,7 @@ class Golyo {
          this.y = SCREEN_H - this.d / 2;
          this.dY = -this.dY;
       }
-   }
+   } */
 
    // részcske mozgatása az új helyére
    move() {

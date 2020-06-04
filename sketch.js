@@ -1,9 +1,9 @@
 // PARAMÉTEREK:
-SCREEN_W = 1500;           // képernyő méret
-SCREEN_H = 860;
-FPS = 30;
-MENNYI = 600;              // részecskék mennyisége
-ATMERO = 15;               // részecskék átmérője
+SCREEN_W = 800;           // képernyő méret
+SCREEN_H = 800;
+FPS = 20;
+MENNYI = 700;              // részecskék mennyisége
+ATMERO = 10;               // részecskék átmérője
 SPEED = 0.67 * ATMERO;     // részecskék mozgási sebessége
 RMAX_SZOMSZED = 5 * ATMERO // maximum távolsága a szomszédoknak
 ALFA_SZOG = 180;           // alfa szög paraméter
@@ -57,42 +57,44 @@ function szomszedSzamolo() {
          if (j != i) {                       // saját magával nem vetjük össze - azt kihagyjuk így
 
             // számoláshoz a dist() beépített fügvényt használom, a távolságot adja vissza
-            tavolsag = dist(golyok[i].x, golyok[i].y, golyok[j].x, golyok[j].y);
-            if (tavolsag < RMAX_SZOMSZED) {  // van egy közeli részecske, azaz egy szomszéd
-               idX = cos(golyok[i].irany);   // delta X vektor érték
-               idY = -sin(golyok[i].irany);  // delta Y vektor érték
+            if (abs(golyok[i].x - golyok[j].x) <= RMAX_SZOMSZED && abs(golyok[i].y - golyok[j].y) <= RMAX_SZOMSZED) {
+               tavolsag = dist(golyok[i].x, golyok[i].y, golyok[j].x, golyok[j].y);
+               if (tavolsag < RMAX_SZOMSZED) {  // van egy közeli részecske, azaz egy szomszéd
+                  idX = cos(golyok[i].irany);   // delta X vektor érték
+                  idY = -sin(golyok[i].irany);  // delta Y vektor érték
 
-               if (golyok[i].irany >= (0 - PI/2) && golyok[i].irany < (PI - PI/2)) { // irányegyenes irányának eldöntése
-                  // a számolás áttekinthetősége miatt yJ és yI változók a két vizsgált 
-                  //részcske Y koordináta értékét tároljuk ezekben a változókban
-                  yJ = golyok[j].y;                            // "j"-ik vizsgált részkecske Y koordináta értéke
-                  yI = golyok[i].y + 
-                     (golyok[j].x - golyok[i].x) / idX * idY;  // "i"-ik részkecske irányegyenesének megfelelően módosított Y koordináta értéke
+                  if (golyok[i].irany >= (0 - PI / 2) && golyok[i].irany < (PI - PI / 2)) { // irányegyenes irányának eldöntése
+                     // a számolás áttekinthetősége miatt yJ és yI változók a két vizsgált 
+                     //részcske Y koordináta értékét tároljuk ezekben a változókban
+                     yJ = golyok[j].y;                            // "j"-ik vizsgált részkecske Y koordináta értéke
+                     yI = golyok[i].y +
+                        (golyok[j].x - golyok[i].x) / idX * idY;  // "i"-ik részkecske irányegyenesének megfelelően módosított Y koordináta értéke
 
-                  if (yI > yJ) { // baloldali szomszédról van szó
-                     golyok[i].setSzomszed(1); // növeljük a baloldali szomszédok számát
+                     if (yI > yJ) { // baloldali szomszédról van szó
+                        golyok[i].setSzomszed(1); // növeljük a baloldali szomszédok számát
+                     }
+                     else {
+                        golyok[i].setSzomszed(2); // ellenkező esetben a jobboldali szomszédokat növeljük
+                     }
                   }
                   else {
-                     golyok[i].setSzomszed(2); // ellenkező esetben a jobboldali szomszédokat növeljük
-                  }
-               }
-               else {
-                  yJ = golyok[j].y;                            // "j"-ik vizsgált részkecske Y koordináta értéke
-                  yI = golyok[i].y + 
-                     (golyok[j].x - golyok[i].x) / idX * idY;  // "i"-ik részkecske irányegyenesének megfelelően módosított Y koordináta értéke
+                     yJ = golyok[j].y;                            // "j"-ik vizsgált részkecske Y koordináta értéke
+                     yI = golyok[i].y +
+                        (golyok[j].x - golyok[i].x) / idX * idY;  // "i"-ik részkecske irányegyenesének megfelelően módosított Y koordináta értéke
 
-                  if (yJ > yI) { // baloldali szomszédról van szó
-                     golyok[i].setSzomszed(1); // növeljük a baloldali szomszédok számát
-                     //print('balra fordult');
+                     if (yJ > yI) { // baloldali szomszédról van szó
+                        golyok[i].setSzomszed(1); // növeljük a baloldali szomszédok számát
+                        //print('balra fordult');
+                     }
+                     else {
+                        golyok[i].setSzomszed(2); // ellenkező esetben a jobboldali szomszédokat növeljük
+                        //print('jobbra fordult');
+                     }
+                     //print('idX: '+ idX + ', idY: '+ idY + 'jX-iX: ' + (golyok[j].x - golyok[i].x) + ', yJ: ' + yJ + ', yI: ' + yI);
+                     //print('delta iY: ' + (golyok[j].x - golyok[i].x) / idX * idY);
+
+                     //setTimeout(function(){alert("hi")}, 100);               
                   }
-                  else {
-                     golyok[i].setSzomszed(2); // ellenkező esetben a jobboldali szomszédokat növeljük
-                     //print('jobbra fordult');
-                  }
-                  //print('idX: '+ idX + ', idY: '+ idY + 'jX-iX: ' + (golyok[j].x - golyok[i].x) + ', yJ: ' + yJ + ', yI: ' + yI);
-                  //print('delta iY: ' + (golyok[j].x - golyok[i].x) / idX * idY);
-                                    
-                  //setTimeout(function(){alert("hi")}, 100);               
                }
             }
          }
