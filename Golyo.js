@@ -72,18 +72,18 @@ class Golyo {
    // kiterített TÓRUSZ VILÁG - minden szél a szemközti oldallal találkozik
    // képernyő határával való találkozás vizsgálata
    checkBorder() {
-      if (this.x < 0) {
-         this.x = this.x + SCREEN_W;
+      if (this.x < -VILAG_PEREME) {
+         this.x = this.x + SCREEN_W + 2 * VILAG_PEREME;
       }
-      else if (this.x > SCREEN_W) {
-         this.y = this.y - SCREEN_W;
+      else if (this.x > SCREEN_W + VILAG_PEREME) {
+         this.y = this.y - SCREEN_W - 2 * VILAG_PEREME;
       }
 
-      if (this.y < 0) {
-         this.y = this.y + SCREEN_H;
+      if (this.y < -VILAG_PEREME ) {
+         this.y = this.y + SCREEN_H + 2 * VILAG_PEREME;
       }
-      else if (this.y > SCREEN_H) {
-         this.y = this.y - SCREEN_H;
+      else if (this.y > SCREEN_H + VILAG_PEREME) {
+         this.y = this.y - SCREEN_H - 2 * VILAG_PEREME;
       }
    }
 

@@ -1,13 +1,14 @@
 // PARAMÉTEREK:
-SCREEN_W = 800;           // képernyő méret
+SCREEN_W = 800;               // képernyő méret
 SCREEN_H = 800;
-FPS = 20;
-MENNYI = 700;              // részecskék mennyisége
-ATMERO = 10;               // részecskék átmérője
-SPEED = 0.67 * ATMERO;     // részecskék mozgási sebessége
-RMAX_SZOMSZED = 5 * ATMERO // maximum távolsága a szomszédoknak
-ALFA_SZOG = 180;           // alfa szög paraméter
-BETA_SZOG = 17;            // béta szög paraméter
+FPS = 20;                     // max képrajzolási sebesség
+MENNYI = 700;                 // részecskék mennyisége
+ATMERO = 10;                  // részecskék átmérője
+SPEED = 0.67 * ATMERO;        // részecskék mozgási sebessége
+RMAX_SZOMSZED = 5 * ATMERO    // maximum távolsága a szomszédoknak
+ALFA_SZOG = 180;              // alfa szög paraméter
+BETA_SZOG = 17;               // béta szög paraméter
+VILAG_PEREME = RMAX_SZOMSZED; // a kép már láthatatlan széleinek nagysága (TÓRUSZVILÁG-hoz);
 
 // VÁLTOZÓK:
 var golyok = new Array(MENNYI);
@@ -84,16 +85,10 @@ function szomszedSzamolo() {
 
                      if (yJ > yI) { // baloldali szomszédról van szó
                         golyok[i].setSzomszed(1); // növeljük a baloldali szomszédok számát
-                        //print('balra fordult');
                      }
                      else {
                         golyok[i].setSzomszed(2); // ellenkező esetben a jobboldali szomszédokat növeljük
-                        //print('jobbra fordult');
                      }
-                     //print('idX: '+ idX + ', idY: '+ idY + 'jX-iX: ' + (golyok[j].x - golyok[i].x) + ', yJ: ' + yJ + ', yI: ' + yI);
-                     //print('delta iY: ' + (golyok[j].x - golyok[i].x) / idX * idY);
-
-                     //setTimeout(function(){alert("hi")}, 100);               
                   }
                }
             }
