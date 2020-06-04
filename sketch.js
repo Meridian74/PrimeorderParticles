@@ -1,14 +1,15 @@
 // PARAMÉTEREK:
-SCREEN_W = 800;               // képernyő méret
+SCREEN_W = 800;                  // képernyő méret
 SCREEN_H = 800;
-FPS = 20;                     // max képrajzolási sebesség
-MENNYI = 700;                 // részecskék mennyisége
-ATMERO = 10;                  // részecskék átmérője
-SPEED = 0.67 * ATMERO;        // részecskék mozgási sebessége
-RMAX_SZOMSZED = 5 * ATMERO    // maximum távolsága a szomszédoknak
-ALFA_SZOG = 180;              // alfa szög paraméter
-BETA_SZOG = 17;               // béta szög paraméter
-VILAG_PEREME = RMAX_SZOMSZED; // a kép már láthatatlan széleinek nagysága (TÓRUSZVILÁG-hoz);
+FPS = 20;                        // max képrajzolási sebesség
+MENNYI = 750;                    // részecskék mennyisége
+ATMERO = 10;                     // részecskék átmérője
+SPEED = 0.67 * ATMERO;           // részecskék mozgási sebessége
+RMAX_SZOMSZED = 5 * ATMERO       // maximum távolsága a szomszédoknak
+RCLOSE_SZOMSZED = 1.3 * ATMERO   // extrém közeli szomszéd távolsága
+ALFA_SZOG = 180;                 // alfa szög paraméter
+BETA_SZOG = 17;                  // béta szög paraméter
+VILAG_PEREME = RMAX_SZOMSZED;    // a kép már láthatatlan széleinek nagysága (TÓRUSZVILÁG-hoz);
 
 // VÁLTOZÓK:
 var golyok = new Array(MENNYI);
@@ -29,9 +30,8 @@ function setup() {
    }
 }
 
-
 function draw() {
-   background(50);
+   background(10);
 
    // szomszédok kiszámolása
    szomszedSzamolo();
@@ -45,6 +45,7 @@ function draw() {
 
    // részecskék kirajzolása
    for (i = 0; i < MENNYI; i++) {
+      golyok[i].setSzin();
       golyok[i].display();
    }
 }
@@ -63,10 +64,13 @@ function szomszedSzamolo() {
                if (tavolsag < RMAX_SZOMSZED) {  // van egy közeli részecske, azaz egy szomszéd
                   idX = cos(golyok[i].irany);   // delta X vektor érték
                   idY = -sin(golyok[i].irany);  // delta Y vektor érték
+                  if (tavolsag <= RCLOSE_SZOMSZED) {
+                     golyok[i].setSzomszed(3);
+                  }
 
                   if (golyok[i].irany >= (0 - PI / 2) && golyok[i].irany < (PI - PI / 2)) { // irányegyenes irányának eldöntése
                      // a számolás áttekinthetősége miatt yJ és yI változók a két vizsgált 
-                     //részcske Y koordináta értékét tároljuk ezekben a változókban
+                     // részecske Y koordináta értékét tároljuk ezekben a változókban
                      yJ = golyok[j].y;                            // "j"-ik vizsgált részkecske Y koordináta értéke
                      yI = golyok[i].y +
                         (golyok[j].x - golyok[i].x) / idX * idY;  // "i"-ik részkecske irányegyenesének megfelelően módosított Y koordináta értéke

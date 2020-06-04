@@ -9,19 +9,21 @@ class Golyo {
       this.dY = this.sebesseg * -sin(this.irany);  // Y irányú elmozdulás nagysága
       this.SzBal = 0;                              // közeli szomszédok baloldalt
       this.SzJobb = 0;                             // közeli szomszédok jobboldalt
+      this.osszesSzomszed = 0;                     // bal és jobboldali szomszédok összege
+      this.nagyonKozeliSzomszed = 0;               // R<1.3 belüli szomszédok száma
       this.fordul;                                 // fordulás előjeles iránya
-      // a részecske RGB színe:
-      // this.R = random(255);
-      // this.G = random(255);
-      // this.B = random(255);
+      //a részecske RGB színe:
+      this.R = 255;
+      this.G = 255;
+      this.B = 255;
 
    }
 
    // részecske kirajzolása
    display() {
-      stroke(100);
-      fill(250);
-      // fill(this.R, this.G, this.B);
+      noStroke();
+      // fill(250);
+      fill(this.R, this.G, this.B);
       circle(this.x, this.y, this.d);
       
       // határterület és irány kirajzolása - ez csak opcionálisan teszteléshez
@@ -32,16 +34,54 @@ class Golyo {
       
    }
 
+   setSzin() {
+      if (this.osszesSzomszed < 13) { // zöld színű
+         this.R = 0;
+         this.G = 240;
+         this.B = 0;         
+      }
+      else if (this.osszesSzomszed < 16) { // barna színű
+         this.R = 204;
+         this.G = 153;
+         this.B = 102;         
+      }
+      else if (this.osszesSzomszed < 36) { // kék színű
+         this.R = 0;
+         this.G = 0;
+         this.B = 240;         
+      }
+      else {   // sárga színű
+         this.R = 240;
+         this.G = 240;
+         this.B = 0;         
+      }
+
+      // magenta ha nagyon sokan tömörülnek össze kis helyre - felülbírálva az eredeti színt
+      if (this.nagyonKozeliSzomszed > 15) { // magenta
+         this.R = 240;
+         this.G = 0;
+         this.B = 240;         
+      }
+
+   }
+
    setSzomszed(ertek) {
-      if (ertek === 0) {  // ha nulla érték jön, akkor lenullázuk a szomszédok számát
+      if (ertek === 0) {         // ha nulla érték jön, akkor lenullázuk a szomszédok számát
          this.SzBal = 0;
          this.SzJobb = 0;
+         this.osszesSzomszed = 0;
+         this.nagyonKozeliSzomszed = 0;
       }
-      else if (ertek === 1) {   // 1 = baloldali a szomszéd
+      else if (ertek === 1) {    // 1 = baloldali a szomszéd
          this.SzBal++;
+         this.osszesSzomszed++;
       }
-      else if (ertek === 2) {   // 2 = jobboldali a szomszéd
+      else if (ertek === 2) {    // 2 = jobboldali a szomszéd
          this.SzJobb++;
+         this.osszesSzomszed++;
+      }
+      else if (ertek == 3) {     // 3 = ha a számszéd távolsága extrémkicsi
+         this.nagyonKozeliSzomszed++;
       }
 
    }
